@@ -86,7 +86,7 @@ Bundle "vim-scripts/Gist.vim"
 Bundle 'vim-scripts/IndexedSearch'
 Bundle 'vim-scripts/jQuery'
 Bundle "henrik/vim-indexed-search"
-Bundle 'hallettj/jslint'
+Bundle 'hallettj/jslint.vim'
 Bundle "chrisbra/NrrwRgn"
 Bundle "hsitz/VimOrganizer"
 Bundle 'altercation/vim-colors-solarized'
