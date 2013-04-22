@@ -1,13 +1,27 @@
+unamestr=`uname`
+platform='unknown'
+if [[ "$unamestr" == 'Darwin' ]]; then
+  platform='Mac'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+  platform='Mac'
+else
+  platform='Linux'
+fi
+
 set -o vi
-export PATH="$HOME/.rbenv/bin:$PATH"
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
-eval "$(rbenv init -)"
-export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/jre/bin
-export SELENIUM_SERVER_JAR=/home/jimmy/lib/selenium-server-standalone-2.24.1.jar
 export NODE_PATH=/home/jimmy/Git/node/node_modules
+if [[ $platform == 'Linux' ]]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
+  eval "$(rbenv init -)"
+  export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/jre/bin
+  export SELENIUM_SERVER_JAR=/home/jimmy/lib/selenium-server-standalone-2.24.1.jar
+  alias ls='ls --color=auto'
+elif [[ $platform == 'Mac' ]]; then
+  alias ls='ls -G'
+fi
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
 alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/assets/stylesheets} '
 alias pg91='/usr/lib/postgresql/9.1/bin/postgres -D /etc/postgresql/9.1/main'
 alias specs='spork & sleep 60s & cd ~/Git/stylitics; bundle exec rspec spec'
