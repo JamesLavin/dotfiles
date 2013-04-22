@@ -1,13 +1,3 @@
-unamestr=`uname`
-platform='unknown'
-if [[ "$unamestr" == 'Darwin' ]]; then
-  platform='Mac'
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
-  platform='Mac'
-else
-  platform='Linux'
-fi
-
 set -o vi
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
 export NODE_PATH=/home/jimmy/Git/node/node_modules
@@ -34,6 +24,20 @@ alias ber='bundle exec rspec '
 alias gitff='git grep -l --all-match -e '
 alias searchgit='git log -Sword'
 #alias gitfl='git log --all-match --grep='
-
+ 
 #alias stylitics-qa='heroku pg:psql -a stylitics-qa'
 #alias stylitics='heroku pg:psql -a stylitics'
+
+# Hedgeye only
+if [[ $platform == 'Mac' ]]; then
+  export PATH="/usr/local/bin:$PATH"
+
+  # Path to the bash it configuration
+  export BASH_IT="/Users/jlavin/.bash_it"
+
+  # Lock and Load a custom theme file
+  export BASH_IT_THEME="bobby"
+
+  # Load Bash It
+  source $BASH_IT/bash_it.sh
+fi
