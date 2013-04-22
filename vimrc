@@ -90,6 +90,7 @@ Bundle 'hallettj/jslint.vim'
 Bundle "chrisbra/NrrwRgn"
 Bundle "hsitz/VimOrganizer"
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'nanotech/jellybeans.vim'
 
 " https://github.com/wincent/Command-T#readme
 Bundle "wincent/Command-T"
