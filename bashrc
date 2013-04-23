@@ -1,3 +1,13 @@
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+  platform='Linux'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+  platform='Mac'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+  platform='Mac'
+fi
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples

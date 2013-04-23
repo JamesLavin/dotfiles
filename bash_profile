@@ -1,3 +1,14 @@
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+  platform='Linux'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+  platform='Mac'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+  platform='Mac'
+else
+  echo "*** Oops! We can't detect your operating system! ***"
+fi
 set -o vi
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
 export NODE_PATH=/home/jimmy/Git/node/node_modules
@@ -32,6 +43,8 @@ alias searchgit='git log -Sword'
 if [[ $platform == 'Mac' ]]; then
   export PATH="/usr/local/bin:$PATH"
 
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
   # Path to the bash it configuration
   export BASH_IT="/Users/jlavin/.bash_it"
 
@@ -40,4 +53,8 @@ if [[ $platform == 'Mac' ]]; then
 
   # Load Bash It
   source $BASH_IT/bash_it.sh
+elif [[ $platform == 'Linux' ]]; then
+  echo "*** Hooray! You're using Linux! ***"
+else
+  echo "*** Oops. We can't detect your operating system! ***"
 fi
