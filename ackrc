@@ -1,0 +1,4 @@
+--ignore-dir=vendor/plugins
+--ignore-dir=public/javascripts
+--ignore-dir=.git
+--ignore-dir=tmp
