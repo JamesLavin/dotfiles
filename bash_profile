@@ -23,7 +23,7 @@ elif [[ $platform == 'Mac' ]]; then
   alias ls='ls -G'
 fi
 alias grep='grep --color=auto'
-alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/assets/stylesheets} '
+alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*.sql,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/plugins,vendor/assets/stylesheets} '
 alias pg91='/usr/lib/postgresql/9.1/bin/postgres -D /etc/postgresql/9.1/main'
 alias specs='spork & sleep 60s & cd ~/Git/stylitics; bundle exec rspec spec'
 alias dc='git diff --cached'

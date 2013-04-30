@@ -16,6 +16,7 @@ set history=1000                                     " remember a lot
 set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
 "autocmd VimEnter * if !argc() | NERDTree | endif    " auto-launch NERDTree
+set ruler                                            " display current line/column info
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -64,6 +65,7 @@ Bundle "kchmck/vim-coffee-script"
 Bundle "tpope/vim-characterize"
 Bundle "tpope/vim-cucumber"
 Bundle "tpope/vim-dispatch"
+Bundle "tpope/vim-endwise"
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-git"
 Bundle "tpope/vim-haml"
@@ -79,7 +81,6 @@ Bundle "tpope/vim-vividchalk"
 Bundle "tsaleh/vim-matchit"
 Bundle "tsaleh/vim-shoulda"
 "git://github.com/tsaleh/vim-tcomment"
-Bundle "tsaleh/vim-tmux"
 Bundle "vim-ruby/vim-ruby"
 Bundle "mileszs/ack.vim"
 Bundle "vim-scripts/Gist.vim"
@@ -105,6 +106,15 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
+
+" congfigure vim-rspec
+map <Leader>rf :call RunCurrentSpecFile()<CR>
+map <Leader>rs :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+
+" configure NERDTree
+map <C-n> :NERDTreeToggle<CR>
+"map <Leader>nt :call NERDTreeToggle()<CR>
 
 colorscheme jellybeans
 "set background=dark

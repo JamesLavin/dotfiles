@@ -100,6 +100,10 @@ fi
 #alias ll='ls -l'
 #alias la='ls -A'
 #alias l='ls -CF'
+alias be='bundle exec'
+alias bi='bundle install'
+alias gl='git log'
+alias gs='git status'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -121,3 +125,6 @@ fi
 if [[ $platform == 'Mac' ]]; then
   PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
