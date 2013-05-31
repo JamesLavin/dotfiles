@@ -1,4 +1,7 @@
 set nocompatible                                     " vim, not vi
+set wildmode=full                                    " tab completion
+set wildmenu                                         " show options for tab completion
+set wildignore=*.log                                 " comma-separated list of files to ignore for tab completion
 filetype off
 
 syntax on
@@ -10,6 +13,8 @@ set shiftwidth=2                                    " tab == 2 spaces
 set softtabstop=2
 set sw=2
 map <C-c> "+y<CR>
+map gn :bn<CR>                                      " goto next buffer
+map gp :bp<CR>                                      " goto previous buffer
 autocmd BufNewFile,BufRead *.json set ft=javascript
 set grepprg=ack-grep\ -a
 set history=1000                                     " remember a lot
@@ -17,6 +22,7 @@ set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
 "autocmd VimEnter * if !argc() | NERDTree | endif    " auto-launch NERDTree
 set ruler                                            " display current line/column info
+set number                                           " show line numbers
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -31,8 +37,16 @@ Bundle "chrisbra/Recover.vim"
 Bundle "scrooloose/syntastic"
 
 " https://github.com/astashov/vim-ruby-debugger#readme
-let g:ruby_debugger_no_maps = 1                      " disable key bindings because they conflict with Command-T
+" let g:ruby_debugger_no_maps = 1                      " disable key bindings because they conflict with Command-T
 Bundle "astashov/vim-ruby-debugger"
+" https://github.com/wincent/Command-T#readme
+" Replace Command-T with ctrlp
+" Bundle "wincent/Command-T"
+" https://github.com/kien/ctrlp.vim/blob/master/readme.md#readme
+Bundle "https://github.com/kien/ctrlp.vim"
+
+" https://github.com/mattn/gist-vim/blob/master/README.mkd#readme
+Bundle "mattn/gist-vim.git"
 
 " https://github.com/ervandew/supertab#readme
 Bundle "ervandew/supertab"
@@ -92,9 +106,6 @@ Bundle "chrisbra/NrrwRgn"
 Bundle "hsitz/VimOrganizer"
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'nanotech/jellybeans.vim'
-
-" https://github.com/wincent/Command-T#readme
-Bundle "wincent/Command-T"
 
 filetype plugin indent on     " required!
 "
