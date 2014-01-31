@@ -19,13 +19,13 @@ function detect_os {
 }
 detect_os
 
-function set_environmental_vars {
-  if [ -e ~/.environmental_vars ]; then
-    echo "Setting machine-specific environment variables"
-    . ~/.environmental_vars
+function run_machine_specific_bash {
+  if [ -e ~/.machine_specific_bash ]; then
+    echo "Running machine-specific bash script"
+    . ~/.machine_specific_bash
   fi
 }
-set_environmental_vars
+run_machine_specific_bash
 
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
 export NODE_PATH=/home/jimmy/Git/node/node_modules
