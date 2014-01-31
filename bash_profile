@@ -30,6 +30,11 @@ alias dc='git diff --cached'
 alias ga='git add '
 alias grm='git rebase master'
 alias gcom='git co master'
+alias gpo='git push origin `git rev-parse --abbrev-ref HEAD`'
+alias gpu='git pull upstream `git rev-parse --abbrev-ref HEAD`'
+alias tssbs='git pull upstream `git rev-parse --abbrev-ref HEAD`; git push origin `git rev-parse --abbrev-ref HEAD`'
+alias gpum='git pull upstream master'
+alias gpom='git push origin master'
 alias be='bundle exec'
 alias ber='bundle exec rspec '
 alias gitff='git grep -l --all-match -e '
@@ -41,7 +46,7 @@ alias searchgit='git log -Sword'
 
 # Hedgeye only
 if [[ $platform == 'Mac' ]]; then
-  export PATH="/usr/local/bin:$PATH"
+  export PATH="$PATH:/usr/local/bin"
 
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
