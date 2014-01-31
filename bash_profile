@@ -1,15 +1,32 @@
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-  platform='Linux'
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
-  platform='Mac'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-  platform='Mac'
-else
-  echo "*** Oops! We can't detect your operating system! ***"
-fi
 set -o vi
+
+function detect_os {
+  platform='unknown'
+  unamestr=`uname`
+  if [[ "$unamestr" == 'Linux' ]]; then
+    platform='Linux'
+  elif [[ "$unamestr" == 'FreeBSD' ]]; then
+    platform='Mac'
+  elif [[ "$unamestr" == 'Darwin' ]]; then
+    platform='Mac'
+  fi
+
+  if [ "$platform" != "unknown" ]; then
+    echo "Your platform has been detected to be '$platform'"
+  else
+    echo "*** Oops! We can't detect your operating system! ***"
+  fi
+}
+detect_os
+
+function set_environmental_vars {
+  if [ -e ~/.environmental_vars ]; then
+    echo "Setting machine-specific environment variables"
+    . ~/.environmental_vars
+  fi
+}
+set_environmental_vars
+
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
 export NODE_PATH=/home/jimmy/Git/node/node_modules
 if [[ $platform == 'Linux' ]]; then
@@ -21,6 +38,10 @@ if [[ $platform == 'Linux' ]]; then
   alias ls='ls --color=auto'
 elif [[ $platform == 'Mac' ]]; then
   alias ls='ls -G'
+  alias rungodless='cd ~/Git/hedgeye-cms; ruby tools/scott/working_scripts/rungodless.rb $1'
+  export JAVA_HOME=$(/usr/libexec/java_home)
+  export PATH="$PATH:$HOME/phantomjs-1.9.0-macosx/bin"
+  export PATH=$PATH:/usr/local/share/npm/bin
 fi
 alias grep='grep --color=auto'
 alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*.sql,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/plugins,vendor/assets/stylesheets} '
@@ -58,6 +79,8 @@ if [[ $platform == 'Mac' ]]; then
 
   # Load Bash It
   source $BASH_IT/bash_it.sh
+
+  alias superbox="ssh server@superbox.hedgeye.com"
 elif [[ $platform == 'Linux' ]]; then
   echo "*** Hooray! You're using Linux! ***"
 else
