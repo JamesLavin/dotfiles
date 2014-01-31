@@ -6,7 +6,8 @@ filetype off
 
 syntax on
 filetype plugin indent on
-set nohlsearch                                      " don't highlight search matches
+nnoremap <silent> vgf :vertical botright wincmd f<CR> " remap vgf to open vertical split 
+set hlsearch                                        " highlight search matches
 set incsearch                                       " highlight search matches while typing
 set expandtab
 set shiftwidth=2                                    " tab == 2 spaces
@@ -16,7 +17,7 @@ map <C-c> "+y<CR>
 map gn :bn<CR>                                      " goto next buffer
 map gp :bp<CR>                                      " goto previous buffer
 autocmd BufNewFile,BufRead *.json set ft=javascript
-set grepprg=ack-grep\ -a
+set grepprg=ack                                      " use ack instead of grep
 set history=1000                                     " remember a lot
 set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
@@ -24,11 +25,23 @@ set autoread                                         " reload files changed outs
 set ruler                                            " display current line/column info
 set number                                           " show line numbers
 
+set tags=./tags;                                     " tell ctags where to find tags
+" open in vertical split, not horizontal
+map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffers
+
+" Display current Git branch
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " https://github.com/gmarik/vundle#readme
 Bundle 'gmarik/vundle'
+
+" https://github.com/vim-scripts/greplace.vim
+Bundle 'vim-scripts/greplace.vim'
 
 " https://github.com/chrisbra/Recover.vim#readme
 Bundle "chrisbra/Recover.vim"
@@ -63,7 +76,8 @@ Bundle "thoughtbot/vim-rspec"
 " https://github.com/garbas/vim-snipmate#readme
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "scrooloose/snipmate-snippets"
+Bundle "honza/vim-snippets"
+" Bundle "scrooloose/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 
 " https://github.com/scrooloose/nerdtree#readme
@@ -94,6 +108,7 @@ Bundle "tpope/vim-vividchalk"
 "git://github.com/tsaleh/taskpaper.vim"
 Bundle "tsaleh/vim-matchit"
 Bundle "tsaleh/vim-shoulda"
+Bundle "tomtom/tcomment_vim"
 "git://github.com/tsaleh/vim-tcomment"
 Bundle "vim-ruby/vim-ruby"
 Bundle "mileszs/ack.vim"
@@ -123,6 +138,10 @@ map <Leader>rf :call RunCurrentSpecFile()<CR>
 map <Leader>rs :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 
+"map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
+"map <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
+"map <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
+
 " configure NERDTree
 map <C-n> :NERDTreeToggle<CR>
 "map <Leader>nt :call NERDTreeToggle()<CR>
@@ -130,3 +149,4 @@ map <C-n> :NERDTreeToggle<CR>
 colorscheme jellybeans
 "set background=dark
 "colorscheme solarized
+
