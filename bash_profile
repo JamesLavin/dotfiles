@@ -67,7 +67,7 @@ alias searchgit='git log -Sword'
 
 # Hedgeye only
 if [[ $platform == 'Mac' ]]; then
-  export PATH="$PATH:/usr/local/bin"
+  export PATH="/usr/local/bin:$PATH"
 
   ### Added by the Heroku Toolbelt
   export PATH="/usr/local/heroku/bin:$PATH"
