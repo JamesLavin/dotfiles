@@ -111,7 +111,11 @@ Bundle "tsaleh/vim-shoulda"
 Bundle "tomtom/tcomment_vim"
 "git://github.com/tsaleh/vim-tcomment"
 Bundle "vim-ruby/vim-ruby"
-Bundle "mileszs/ack.vim"
+
+" Trying ag as ack replacement
+Bundle "rking/ag.vim"
+" Bundle "mileszs/ack.vim"
+
 Bundle "vim-scripts/Gist.vim"
 Bundle 'vim-scripts/IndexedSearch'
 Bundle 'vim-scripts/jQuery'

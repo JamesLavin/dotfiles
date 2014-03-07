@@ -1,4 +1,31 @@
---ignore-dir=vendor/plugins
---ignore-dir=public/javascripts
+--ignore-dir=vendor
+#--ignore-dir=vendor/plugins
+#--ignore-dir=vendor/gems
+#--ignore-dir=shared
+#--ignore-dir=*/vendor/plugins
+#--ignore-dir=*/vendor/gems
+#--ignore-dir=*/shared
+#--ignore-dir=app/assets/javascripts
+#--ignore-dir=public/javascripts
+--ignore-dir=log
 --ignore-dir=.git
 --ignore-dir=tmp
+--ignore-file=is:tags
+--ignore-dir=padrino-framework
+#--type-set editor_plugin:match:/editor_plugin\.js/
+#--ignore-file=editor_plugin
+#--type-set prototype:match:/prototype\.js/
+#--ignore-file=prototype
+--type-add=cucumber=.feature,*_steps.rb
+--type-set=spec=*_spec.rb
+--type-set=haml=.haml
+--type-set=sass=.sass,.scss,.css
+--type-add=ruby=.rb,.haml,.rake,.rsel,.builder
+--type-add=html=.html.erb,.html.haml
+--type-add=js=.js.erb
+--type-add=css=.sass,.scss,.css
+--type-set=DUMB=.make,.log,.sql
+#--type-set=DUMB=.js,.sql,.make,.log
+#--type-set=DUMB=.html,.sql,.make,.log
+#--noDUMB
+

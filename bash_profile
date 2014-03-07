@@ -69,7 +69,10 @@ alias searchgit='git log -Sword'
 if [[ $platform == 'Mac' ]]; then
   export PATH="$PATH:/usr/local/bin"
 
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  ### Added by the Heroku Toolbelt
+  export PATH="/usr/local/heroku/bin:$PATH"
+
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
   # Path to the bash it configuration
   export BASH_IT="/Users/jlavin/.bash_it"
