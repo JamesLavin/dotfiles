@@ -4,6 +4,11 @@ set wildmenu                                         " show options for tab comp
 set wildignore=*.log                                 " comma-separated list of files to ignore for tab completion
 filetype off
 
+" remap <Leader> to ","
+let mapleader=","
+nnoremap ; :
+set pastetoggle=<F2>
+
 syntax on
 filetype plugin indent on
 nnoremap <silent> vgf :vertical botright wincmd f<CR> " remap vgf to open vertical split 
@@ -136,6 +141,9 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
+
+" map <Leader><Leader> to jump back-and-forth between files
+map <Leader><Leader> <C-^>
 
 " congfigure vim-rspec
 map <Leader>rf :call RunCurrentSpecFile()<CR>

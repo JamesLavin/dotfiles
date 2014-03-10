@@ -67,6 +67,7 @@ alias searchgit='git log -Sword'
 
 # Hedgeye only
 if [[ $platform == 'Mac' ]]; then
+  export rvm_silence_path_mismatch_check_flag=1
   export PATH="/usr/local/bin:$PATH"
 
   ### Added by the Heroku Toolbelt
