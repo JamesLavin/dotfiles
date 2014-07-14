@@ -82,7 +82,7 @@ if [[ $platform == 'Mac' ]]; then
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
   # Path to the bash it configuration
-  export BASH_IT="/Users/jlavin/.bash_it"
+  export BASH_IT="$HOME/.bash_it"
 
   # Lock and Load a custom theme file
   export BASH_IT_THEME="bobby"
