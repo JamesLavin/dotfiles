@@ -105,6 +105,7 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-heroku'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-rails'
@@ -169,4 +170,8 @@ map <C-n> :NERDTreeToggle<CR>
 "colorscheme solarized
 
 "set background=dark
+highlight LineNr ctermfg=grey
 colorscheme jellybeans
+
+" use ag instead of ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
