@@ -28,13 +28,13 @@ function run_machine_specific_bash {
 run_machine_specific_bash
 
 export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
-export NODE_PATH=/home/jimmy/Git/node/node_modules
+export NODE_PATH=$HOME/Git/node/node_modules
 if [[ $platform == 'Linux' ]]; then
   export PATH="$HOME/.rbenv/bin:$PATH"
   export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
   eval "$(rbenv init -)"
   export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/jre/bin
-  export SELENIUM_SERVER_JAR=/home/jimmy/lib/selenium-server-standalone-2.24.1.jar
+  export SELENIUM_SERVER_JAR=$HOME/lib/selenium-server-standalone-2.24.1.jar
   alias ls='ls --color=auto'
 elif [[ $platform == 'Mac' ]]; then
   alias ls='ls -G'
@@ -43,6 +43,7 @@ elif [[ $platform == 'Mac' ]]; then
   export PATH="$PATH:$HOME/phantomjs-1.9.0-macosx/bin"
   export PATH=$PATH:/usr/local/share/npm/bin
 fi
+
 alias grep='grep --color=auto'
 alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*.sql,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/plugins,vendor/assets/stylesheets} '
 alias pg91='/usr/lib/postgresql/9.1/bin/postgres -D /etc/postgresql/9.1/main'
@@ -87,6 +88,8 @@ if [[ $platform == 'Mac' ]]; then
   alias superbox="ssh server@superbox.hedgeye.com"
 elif [[ $platform == 'Linux' ]]; then
   echo "*** Hooray! You're using Linux! ***"
+  #export PATH="$HOME/anaconda/bin:$PATH"
+  export PATH="$HOME/anaconda/envs/py34/bin:$PATH"
 else
   echo "*** Oops. We can't detect your operating system! ***"
 fi
