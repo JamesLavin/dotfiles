@@ -39,24 +39,27 @@ autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffer
 " Display current Git branch
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin('~/.vim/bundle')
 
 " https://github.com/gmarik/vundle#readme
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
+
+" reStructuredText in Vim
+Plugin 'Rykka/riv.vim'
 
 " https://github.com/vim-scripts/greplace.vim
 Bundle 'vim-scripts/greplace.vim'
 
 " https://github.com/chrisbra/Recover.vim#readme
-Bundle "chrisbra/Recover.vim"
+Plugin 'chrisbra/Recover.vim'
 
 " https://github.com/scrooloose/syntastic#readme
-Bundle "scrooloose/syntastic"
+Plugin 'scrooloose/syntastic'
 
 " https://github.com/astashov/vim-ruby-debugger#readme
+Plugin "astashov/vim-ruby-debugger"
 " let g:ruby_debugger_no_maps = 1                      " disable key bindings because they conflict with Command-T
-Bundle "astashov/vim-ruby-debugger"
 " https://github.com/wincent/Command-T#readme
 " Replace Command-T with ctrlp
 " Bundle "wincent/Command-T"
@@ -67,80 +70,85 @@ Bundle "https://github.com/kien/ctrlp.vim"
 Bundle "mattn/gist-vim.git"
 
 " https://github.com/ervandew/supertab#readme
-Bundle "ervandew/supertab"
+Plugin 'ervandew/supertab'
 
 " https://github.com/godlygeek/tabular#readme
-Bundle "godlygeek/tabular"
+Plugin 'godlygeek/tabular'
 
 " https://github.com/depuracao/vim-rdoc#readme
-Bundle "depuracao/vim-rdoc"
+Plugin 'depuracao/vim-rdoc'
 
 " https://github.com/thoughtbot/vim-rspec#readme
-Bundle "thoughtbot/vim-rspec"
+Plugin 'thoughtbot/vim-rspec'
 
 " https://github.com/garbas/vim-snipmate#readme
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/vim-snippets"
-" Bundle "scrooloose/snipmate-snippets"
-Bundle "garbas/vim-snipmate"
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'honza/vim-snippets'
+" Plugin 'scrooloose/snipmate-snippets'
+Plugin 'garbas/vim-snipmate'
 
 " https://github.com/scrooloose/nerdtree#readme
-Bundle "scrooloose/nerdtree"
+Plugin 'scrooloose/nerdtree'
 
 " https://github.com/scrooloose/nerdcommenter#readme
-Bundle "scrooloose/nerdcommenter"
+Plugin 'scrooloose/nerdcommenter'
 
-Bundle "airblade/vim-gitgutter"
+Plugin 'airblade/vim-gitgutter'
 
-Bundle "timcharper/textile.vim"
-Bundle "kchmck/vim-coffee-script"
-Bundle "tpope/vim-characterize"
-Bundle "tpope/vim-cucumber"
-Bundle "tpope/vim-dispatch"
-Bundle "tpope/vim-endwise"
-Bundle "tpope/vim-fugitive"
-Bundle "tpope/vim-git"
-Bundle "tpope/vim-haml"
-Bundle "pangloss/vim-javascript"
-Bundle "tpope/vim-markdown"
-Bundle "tpope/vim-rails"
-Bundle "tpope/vim-rake"
-Bundle "tpope/vim-repeat"
-Bundle "ecomba/vim-ruby-refactoring"
-Bundle "tpope/vim-surround"
-Bundle "tpope/vim-vividchalk"
+Plugin 'timcharper/textile.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-characterize'
+Plugin 'tpope/vim-cucumber'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-haml'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-repeat'
+Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-vividchalk'
 "git://github.com/tsaleh/taskpaper.vim"
-Bundle "tsaleh/vim-matchit"
-Bundle "tsaleh/vim-shoulda"
-Bundle "tomtom/tcomment_vim"
+
+" Plugin "tomtom/tcomment_vim"
 "git://github.com/tsaleh/vim-tcomment"
-Bundle "vim-ruby/vim-ruby"
 
 " Trying ag as ack replacement
-Bundle "rking/ag.vim"
-" Bundle "mileszs/ack.vim"
+Plugin "rking/ag.vim"
+" Plugin "mileszs/ack.vim"
 
-Bundle "vim-scripts/Gist.vim"
-Bundle 'vim-scripts/IndexedSearch'
-Bundle 'vim-scripts/jQuery'
-Bundle "henrik/vim-indexed-search"
-Bundle 'hallettj/jslint.vim'
-Bundle "chrisbra/NrrwRgn"
-Bundle "hsitz/VimOrganizer"
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'nanotech/jellybeans.vim'
+"Plugin 'tsaleh/vim-matchit' " replaced with vim-sensible
+Plugin 'tsaleh/vim-shoulda'
+"git://github.com/tsaleh/vim-tcomment"
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'mileszs/ack.vim'
+Plugin 'vim-scripts/Gist.vim'
+Plugin 'vim-scripts/IndexedSearch'
+Plugin 'vim-scripts/jQuery'
+Plugin 'henrik/vim-indexed-search'
+Plugin 'hallettj/jslint.vim'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'hsitz/VimOrganizer'
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'nanotech/jellybeans.vim'
 
+call vundle#end()
 filetype plugin indent on     " required!
-"
+
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install(update) plugins
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused plugins
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after Plugin command are not allowed..
 
 " map <Leader><Leader> to jump back-and-forth between files
 map <Leader><Leader> <C-^>
@@ -158,7 +166,7 @@ map <Leader>l :call RunLastSpec()<CR>
 map <C-n> :NERDTreeToggle<CR>
 "map <Leader>nt :call NERDTreeToggle()<CR>
 
-colorscheme jellybeans
-"set background=dark
 "colorscheme solarized
 
+"set background=dark
+colorscheme jellybeans
