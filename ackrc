@@ -8,6 +8,7 @@
 #--ignore-dir=app/assets/javascripts
 #--ignore-dir=public/javascripts
 --ignore-dir=log
+--ignore-dir=archive
 --ignore-dir=.git
 --ignore-dir=tmp
 --ignore-file=is:tags

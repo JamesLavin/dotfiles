@@ -42,6 +42,7 @@ elif [[ $platform == 'Mac' ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
   export PATH="$PATH:$HOME/phantomjs-1.9.0-macosx/bin"
   export PATH=$PATH:/usr/local/share/npm/bin
+  export CLASSPATH=.:$HOME/Tech/Java/
 fi
 
 alias grep='grep --color=auto'
@@ -74,6 +75,10 @@ if [[ $platform == 'Mac' ]]; then
   ### Added by the Heroku Toolbelt
   export PATH="/usr/local/heroku/bin:$PATH"
 
+  tyson_get() {
+    scp ubuntu@tyson.hedgeye.com:/backup/db_backup/db_backup.23.sql.gz .
+  }
+
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
   # Path to the bash it configuration
@@ -86,6 +91,8 @@ if [[ $platform == 'Mac' ]]; then
   source $BASH_IT/bash_it.sh
 
   alias superbox="ssh server@superbox.hedgeye.com"
+
+  export PATH="$HOME/Applications/Anaconda/anaconda/envs/py34/bin:$PATH"
 elif [[ $platform == 'Linux' ]]; then
   echo "*** Hooray! You're using Linux! ***"
   #export PATH="$HOME/anaconda/bin:$PATH"
