@@ -58,7 +58,7 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'scrooloose/syntastic'
 
 " https://github.com/astashov/vim-ruby-debugger#readme
-Plugin "astashov/vim-ruby-debugger"
+Plugin 'astashov/vim-ruby-debugger'
 " let g:ruby_debugger_no_maps = 1                      " disable key bindings because they conflict with Command-T
 " https://github.com/wincent/Command-T#readme
 " Replace Command-T with ctrlp
@@ -116,12 +116,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vividchalk'
 "git://github.com/tsaleh/taskpaper.vim"
 
-" Plugin "tomtom/tcomment_vim"
+" Plugin 'tomtom/tcomment_vim'
 "git://github.com/tsaleh/vim-tcomment"
 
 " Trying ag as ack replacement
-Plugin "rking/ag.vim"
-" Plugin "mileszs/ack.vim"
+Plugin 'rking/ag.vim'
+" Plugin 'mileszs/ack.vim'
 
 "Plugin 'tsaleh/vim-matchit' " replaced with vim-sensible
 Plugin 'tsaleh/vim-shoulda'
