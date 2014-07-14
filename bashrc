@@ -124,5 +124,6 @@ fi
 # Hedgeye only
 if [[ $platform == 'Mac' ]]; then
   PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+  PATH=$PATH:/usr/texbin
 fi
 
