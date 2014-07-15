@@ -51,6 +51,8 @@ Plugin 'Rykka/riv.vim'
 " https://github.com/vim-scripts/greplace.vim
 Bundle 'vim-scripts/greplace.vim'
 
+Bundle 'vim-scripts/Vim-R-plugin'
+
 " https://github.com/chrisbra/Recover.vim#readme
 Plugin 'chrisbra/Recover.vim'
 
