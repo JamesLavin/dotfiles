@@ -138,8 +138,10 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'hallettj/jslint.vim'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'hsitz/VimOrganizer'
-"Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'nanotech/jellybeans.vim'
+
+Plugin 'hdima/python-syntax'
 
 call vundle#end()
 filetype plugin indent on     " required!
@@ -169,11 +171,11 @@ map <Leader>l :call RunLastSpec()<CR>
 map <C-n> :NERDTreeToggle<CR>
 "map <Leader>nt :call NERDTreeToggle()<CR>
 
-"colorscheme solarized
+colorscheme solarized
 
 "set background=dark
 highlight LineNr ctermfg=grey
-colorscheme jellybeans
+"colorscheme jellybeans
 
 " use ag instead of ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
