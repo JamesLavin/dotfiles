@@ -117,6 +117,8 @@ Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vividchalk'
+"https://github.com/skalnik/vim-vroom
+Plugin 'skalnik/vim-vroom'
 "git://github.com/tsaleh/taskpaper.vim"
 
 " Plugin 'tomtom/tcomment_vim'
