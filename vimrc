@@ -77,6 +77,9 @@ Plugin 'ervandew/supertab'
 " https://github.com/godlygeek/tabular#readme
 Plugin 'godlygeek/tabular'
 
+" https://github.com/vadv/vim-chef
+Plugin 'vadv/vim-chef'
+
 " https://github.com/depuracao/vim-rdoc#readme
 Plugin 'depuracao/vim-rdoc'
 
@@ -97,6 +100,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 
 Plugin 'airblade/vim-gitgutter'
+
+Plugin 'elixir-lang/vim-elixir'
 
 Plugin 'timcharper/textile.vim'
 Plugin 'kchmck/vim-coffee-script'
