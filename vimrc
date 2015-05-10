@@ -26,7 +26,14 @@ set grepprg=ack                                      " use ack instead of grep
 set history=1000                                     " remember a lot
 set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
+
 "autocmd VimEnter * if !argc() | NERDTree | endif    " auto-launch NERDTree
+" next two lines auto-start NERDTree if vim starts without a file
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" next line closes vim if NERDTree is last open window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 set ruler                                            " display current line/column info
 set number                                           " show line numbers
 
@@ -34,6 +41,7 @@ set tags=./tags;                                     " tell ctags where to find 
 " open in vertical split, not horizontal
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
+autocmd BufWritePre *.rb :%s/\s\+$//e
 autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffers
 
 " Display current Git branch
@@ -105,6 +113,7 @@ Plugin 'elixir-lang/vim-elixir'
 
 Plugin 'timcharper/textile.vim'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-characterize'
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-dispatch'
@@ -114,7 +123,8 @@ Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-heroku'
 Plugin 'pangloss/vim-javascript'
-Plugin 'tpope/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
+" Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
@@ -137,6 +147,7 @@ Plugin 'rking/ag.vim'
 Plugin 'tsaleh/vim-shoulda'
 "git://github.com/tsaleh/vim-tcomment"
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'slim-template/vim-slim'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-scripts/Gist.vim'
 Plugin 'vim-scripts/IndexedSearch'
@@ -145,7 +156,7 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'hallettj/jslint.vim'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'hsitz/VimOrganizer'
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 Plugin 'nanotech/jellybeans.vim'
 
 Plugin 'hdima/python-syntax'
@@ -178,7 +189,7 @@ map <Leader>l :call RunLastSpec()<CR>
 map <C-n> :NERDTreeToggle<CR>
 "map <Leader>nt :call NERDTreeToggle()<CR>
 
-colorscheme solarized
+" colorscheme solarized
 
 "set background=dark
 highlight LineNr ctermfg=grey
@@ -186,3 +197,6 @@ highlight LineNr ctermfg=grey
 
 " use ag instead of ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Automatically set screen title to filename (http://vim.wikia.com/wiki/Automatically_set_screen_title)
+autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
