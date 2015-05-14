@@ -1,17 +1,37 @@
-set nocompatible                                     " vim, not vi
+" vim, not vi
+if &compatible
+  set nocompatible
+endif
+
+" display current line/column info
+set ruler
+
+" show line numbers
+set number
+
 set wildmode=full                                    " tab completion
 set wildmenu                                         " show options for tab completion
 set wildignore=*.log                                 " comma-separated list of files to ignore for tab completion
-filetype off
 
-" remap <Leader> to ","
-let mapleader=","
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+filetype plugin indent on
+
+let mapleader=" "
 nnoremap ; :
 set pastetoggle=<F2>
 
-syntax on
-filetype plugin indent on
-nnoremap <silent> vgf :vertical botright wincmd f<CR> " remap vgf to open vertical split 
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+  syntax on
+endif
+
+" remap vgf to open vertical split 
+" nnoremap <silent> vgf :vertical botright wincmd f<CR>
+
 set hlsearch                                        " highlight search matches
 set incsearch                                       " highlight search matches while typing
 set expandtab
@@ -22,22 +42,37 @@ map <C-c> "+y<CR>
 map gn :bn<CR>                                      " goto next buffer
 map gp :bp<CR>                                      " goto previous buffer
 autocmd BufNewFile,BufRead *.json set ft=javascript
-set grepprg=ack                                      " use ack instead of grep
-set history=1000                                     " remember a lot
+
+if executable('ag')
+  " use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+set history=100                                      " remember a lot
 set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
 
-"autocmd VimEnter * if !argc() | NERDTree | endif    " auto-launch NERDTree
-" next two lines auto-start NERDTree if vim starts without a file
+" auto-launch NERDTree
+"autocmd VimEnter * if !argc() | NERDTree | endif
+
+" auto-start NERDTree if vim starts without a file
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" next line closes vim if NERDTree is last open window
+
+" close vim if NERDTree is last open window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-set ruler                                            " display current line/column info
-set number                                           " show line numbers
+" tell ctags where to find tags
+set tags=./tags;
 
-set tags=./tags;                                     " tell ctags where to find tags
 " open in vertical split, not horizontal
 map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -46,132 +81,6 @@ autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffer
 
 " Display current Git branch
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin('~/.vim/bundle')
-
-" https://github.com/gmarik/vundle#readme
-Plugin 'gmarik/Vundle.vim'
-
-" reStructuredText in Vim
-Plugin 'Rykka/riv.vim'
-
-" https://github.com/vim-scripts/greplace.vim
-Bundle 'vim-scripts/greplace.vim'
-
-Bundle 'vim-scripts/Vim-R-plugin'
-
-" https://github.com/chrisbra/Recover.vim#readme
-Plugin 'chrisbra/Recover.vim'
-
-" https://github.com/scrooloose/syntastic#readme
-Plugin 'scrooloose/syntastic'
-
-" https://github.com/astashov/vim-ruby-debugger#readme
-Plugin 'astashov/vim-ruby-debugger'
-" let g:ruby_debugger_no_maps = 1                      " disable key bindings because they conflict with Command-T
-" https://github.com/wincent/Command-T#readme
-" Replace Command-T with ctrlp
-" Bundle "wincent/Command-T"
-" https://github.com/kien/ctrlp.vim/blob/master/readme.md#readme
-Bundle "https://github.com/kien/ctrlp.vim"
-
-" https://github.com/mattn/gist-vim/blob/master/README.mkd#readme
-Bundle "mattn/gist-vim.git"
-
-" https://github.com/ervandew/supertab#readme
-Plugin 'ervandew/supertab'
-
-" https://github.com/godlygeek/tabular#readme
-Plugin 'godlygeek/tabular'
-
-" https://github.com/vadv/vim-chef
-Plugin 'vadv/vim-chef'
-
-" https://github.com/depuracao/vim-rdoc#readme
-Plugin 'depuracao/vim-rdoc'
-
-" https://github.com/thoughtbot/vim-rspec#readme
-Plugin 'thoughtbot/vim-rspec'
-
-" https://github.com/garbas/vim-snipmate#readme
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'honza/vim-snippets'
-" Plugin 'scrooloose/snipmate-snippets'
-Plugin 'garbas/vim-snipmate'
-
-" https://github.com/scrooloose/nerdtree#readme
-Plugin 'scrooloose/nerdtree'
-
-" https://github.com/scrooloose/nerdcommenter#readme
-Plugin 'scrooloose/nerdcommenter'
-
-Plugin 'airblade/vim-gitgutter'
-
-Plugin 'elixir-lang/vim-elixir'
-
-Plugin 'timcharper/textile.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'tpope/vim-bundler'
-Plugin 'tpope/vim-characterize'
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-heroku'
-Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'
-" Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-rake'
-Plugin 'tpope/vim-repeat'
-Plugin 'ecomba/vim-ruby-refactoring'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vividchalk'
-"https://github.com/skalnik/vim-vroom
-Plugin 'skalnik/vim-vroom'
-"git://github.com/tsaleh/taskpaper.vim"
-
-" Plugin 'tomtom/tcomment_vim'
-"git://github.com/tsaleh/vim-tcomment"
-
-" Trying ag as ack replacement
-Plugin 'rking/ag.vim'
-" Plugin 'mileszs/ack.vim'
-
-"Plugin 'tsaleh/vim-matchit' " replaced with vim-sensible
-Plugin 'tsaleh/vim-shoulda'
-"git://github.com/tsaleh/vim-tcomment"
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'slim-template/vim-slim'
-Plugin 'mileszs/ack.vim'
-Plugin 'vim-scripts/Gist.vim'
-Plugin 'vim-scripts/IndexedSearch'
-Plugin 'vim-scripts/jQuery'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'hallettj/jslint.vim'
-Plugin 'chrisbra/NrrwRgn'
-Plugin 'hsitz/VimOrganizer'
-" Plugin 'altercation/vim-colors-solarized'
-Plugin 'nanotech/jellybeans.vim'
-
-Plugin 'hdima/python-syntax'
-
-call vundle#end()
-filetype plugin indent on     " required!
-
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install(update) plugins
-" :PluginSearch(!) foo - search(or refresh cache first) for foo
-" :PluginClean(!)      - confirm(or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Plugin command are not allowed..
 
 " map <Leader><Leader> to jump back-and-forth between files
 map <Leader><Leader> <C-^>
