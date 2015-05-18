@@ -85,11 +85,6 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 " map <Leader><Leader> to jump back-and-forth between files
 map <Leader><Leader> <C-^>
 
-" congfigure vim-rspec
-map <Leader>rf :call RunCurrentSpecFile()<CR>
-map <Leader>rs :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-
 "map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
@@ -106,6 +101,20 @@ highlight LineNr ctermfg=grey
 
 " use ag instead of ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" disable vim-markdown folding
+let g:vim_markdown_folding_disabled=1
+
+" https://github.com/thoughtbot/vim-rspec
+" configure vim-rspec
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+let g:rspec_runner = "os_x_iterm"
+
+" RSpec should use spring
+let g:rspec_command = '!spring rspec {spec}'
 
 " Automatically set screen title to filename (http://vim.wikia.com/wiki/Automatically_set_screen_title)
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
