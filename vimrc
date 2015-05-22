@@ -3,6 +3,8 @@ if &compatible
   set nocompatible
 endif
 
+set clipboard=unnamed
+
 " display current line/column info
 set ruler
 
@@ -105,12 +107,21 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 
-" https://github.com/thoughtbot/vim-rspec
-" configure vim-rspec
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
+map <Leader>ag :vsp<cr>:Ag 
 map <Leader>a :call RunAllSpecs()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>vc :RVcontroller<cr>
+map <Leader>vf :RVfunctional<cr>
+map <Leader>vm :RVmodel<cr>
+map <Leader>vv :RVview<cr>
+map <Leader>vu :RVunittest<cr>
+map <Leader>w <C-w>w
+
+nmap <D-[> gT
+nmap <D-]> gt
+
 let g:rspec_runner = "os_x_iterm"
 
 " RSpec should use spring
