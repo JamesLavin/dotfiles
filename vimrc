@@ -108,7 +108,7 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <Leader>ag :vsp<CR>:Ag 
 nnoremap <Leader>a :call RunAllSpecs()<CR>
 " use <Leader>f to go to file in a vertical split
-nnoremap <Leader>f :vertical botright wincmd f<CR>
+nnoremap <Leader>f :vertical botright wincmd gf<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>
 nnoremap <Leader>nt :call NERDTreeToggle()<CR>
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
@@ -123,13 +123,14 @@ nnoremap <Leader>vv :RVview<CR>
 nnoremap <Leader>vu :RVunittest<CR>
 nnoremap <Leader>w <C-w>w
 
+let g:rspec_runner = "os_x_iterm"
+
 if has("gui_macvim")
+  let g:rspec_command = "spring rspec {spec}"
 else
-  let g:rspec_runner = "os_x_iterm"
+  let g:rspec_command = "!spring rspec {spec}"
 endif
 
-" RSpec should use spring
-let g:rspec_command = '!spring rspec {spec}'
 
 :inoremap <C-d> <esc>ddi
 
