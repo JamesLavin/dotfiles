@@ -22,6 +22,7 @@ endif
 filetype plugin indent on
 
 let mapleader=" "
+let maplocalleader = "\\"
 nnoremap ; :
 set pastetoggle=<F2>
 
@@ -40,9 +41,9 @@ set expandtab
 set shiftwidth=2                                    " tab == 2 spaces
 set softtabstop=2
 set sw=2
-map <C-c> "+y<CR>
-map gn :bn<CR>                                      " goto next buffer
-map gp :bp<CR>                                      " goto previous buffer
+nnoremap <C-c> "+y<CR>
+nnoremap gn :bn<CR>                                      " goto next buffer
+nnoremap gp :bp<CR>                                      " goto previous buffer
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
 if executable('ag')
@@ -70,13 +71,13 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " close vim if NERDTree is last open window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " tell ctags where to find tags
 set tags=./tags;
 
 " open in vertical split, not horizontal
-map <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 autocmd BufWritePre *.rb :%s/\s\+$//e
 autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffers
@@ -85,15 +86,11 @@ autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffer
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " map <Leader><Leader> to jump back-and-forth between files
-map <Leader><Leader> <C-^>
+nnoremap <Leader><Leader> <C-^>
 
 "map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
-
-" configure NERDTree
-map <C-n> :NERDTreeToggle<CR>
-"map <Leader>nt :call NERDTreeToggle()<CR>
 
 " colorscheme solarized
 
@@ -107,25 +104,34 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 
-map <Leader>ag :vsp<cr>:Ag 
-map <Leader>a :call RunAllSpecs()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>vc :RVcontroller<cr>
-map <Leader>vf :RVfunctional<cr>
-map <Leader>vm :RVmodel<cr>
-map <Leader>vv :RVview<cr>
-map <Leader>vu :RVunittest<cr>
-map <Leader>w <C-w>w
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <Leader>ag :vsp<CR>:Ag 
+nnoremap <Leader>a :call RunAllSpecs()<CR>
+" use <Leader>f to go to file in a vertical split
+nnoremap <Leader>f :vertical botright wincmd f<CR>
+nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>nt :call NERDTreeToggle()<CR>
+nnoremap <leader>rc :vsplit $MYVIMRC<CR>
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+" use <Leader>T to jump to tag in a vertical split
+nnoremap <Leader>T :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<cr>:exec("tag ". word)<cr>
+nnoremap <Leader>vc :RVcontroller<CR>
+nnoremap <Leader>vf :RVfunctional<CR>
+nnoremap <Leader>vm :RVmodel<CR>
+nnoremap <Leader>vv :RVview<CR>
+nnoremap <Leader>vu :RVunittest<CR>
+nnoremap <Leader>w <C-w>w
 
-nmap <D-[> gT
-nmap <D-]> gt
-
-let g:rspec_runner = "os_x_iterm"
+if has("gui_macvim")
+else
+  let g:rspec_runner = "os_x_iterm"
+endif
 
 " RSpec should use spring
 let g:rspec_command = '!spring rspec {spec}'
+
+:inoremap <C-d> <esc>ddi
 
 " Automatically set screen title to filename (http://vim.wikia.com/wiki/Automatically_set_screen_title)
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
