@@ -105,6 +105,10 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:vim_markdown_folding_disabled=1
 
 nnoremap <C-n> :NERDTreeToggle<CR>
+
+nnoremap <Leader>] :tabnext<CR>
+nnoremap <Leader>[ :tabprev<CR>
+
 nnoremap <Leader>ag :vsp<CR>:Ag 
 nnoremap <Leader>a :call RunAllSpecs()<CR>
 " use <Leader>f to go to file in a vertical split
