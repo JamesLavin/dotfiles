@@ -6,6 +6,12 @@ call vundle#begin('~/.vim/bundle')
 " https://github.com/gmarik/vundle#readme
 Plugin 'gmarik/Vundle.vim'
 
+" https://github.com/bling/vim-airline
+Plugin 'bling/vim-airline'
+
+" https://github.com/edkolev/tmuxline.vim
+Plugin 'edkolev/tmuxline.vim'
+
 " reStructuredText in Vim
 Plugin 'Rykka/riv.vim'
 
@@ -119,7 +125,7 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'hallettj/jslint.vim'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'hsitz/VimOrganizer'
-" Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'nanotech/jellybeans.vim'
 
 Plugin 'hdima/python-syntax'

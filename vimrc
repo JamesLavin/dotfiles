@@ -3,13 +3,13 @@ if &compatible
   set nocompatible
 endif
 
+syntax enable
+
 set clipboard=unnamed
 
-" display current line/column info
-set ruler
+set ruler                                            " display current line/column info
 
-" show line numbers
-set number
+set number                                           " show line numbers
 
 set wildmode=full                                    " tab completion
 set wildmenu                                         " show options for tab completion
@@ -23,6 +23,7 @@ filetype plugin indent on
 
 let mapleader=" "
 let maplocalleader = "\\"
+
 nnoremap ; :
 set pastetoggle=<F2>
 
@@ -92,11 +93,18 @@ nnoremap <Leader><Leader> <C-^>
 "map <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
 
-" colorscheme solarized
+set background=light
+let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
+let g:solarized_termcolors=256
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+colorscheme solarized
+" colorscheme molokai
+" colorscheme badwolf
+" colorscheme jellybeans
 
-"set background=dark
 highlight LineNr ctermfg=grey
-"colorscheme jellybeans
 
 " use ag instead of ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -134,7 +142,6 @@ if has("gui_macvim")
 else
   let g:rspec_command = "!spring rspec {spec}"
 endif
-
 
 :inoremap <C-d> <esc>ddi
 
