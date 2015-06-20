@@ -25,8 +25,13 @@ Plugin 'vim-scripts/Vim-R-plugin'
 " https://github.com/chrisbra/Recover.vim#readme
 Plugin 'chrisbra/Recover.vim'
 
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+
 " https://github.com/scrooloose/syntastic#readme
 Plugin 'scrooloose/syntastic'
+
+Plugin 'bronson/vim-trailing-whitespace'
 
 " https://github.com/astashov/vim-ruby-debugger#readme
 " Plugin 'astashov/vim-ruby-debugger'
@@ -78,6 +83,8 @@ Plugin 'scrooloose/nerdcommenter'
 " stage and revert individual hunks
 Plugin 'airblade/vim-gitgutter'
 
+" Plugin 'xolox/vim-easytags'
+
 Plugin 'elixir-lang/vim-elixir'
 
 Plugin 'timcharper/textile.vim'
@@ -108,10 +115,15 @@ Plugin 'skalnik/vim-vroom'
 " Plugin 'tomtom/tcomment_vim'
 "git://github.com/tsaleh/vim-tcomment"
 
+Plugin 'vim-scripts/tComment'
+
 " run ag from vim, and shows the results in a split window
 " :Ag [options] {pattern} [{directory}]
 Plugin 'rking/ag.vim'
 " Plugin 'mileszs/ack.vim'
+
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 
 "Plugin 'tsaleh/vim-matchit' " replaced with vim-sensible
 Plugin 'tsaleh/vim-shoulda'
