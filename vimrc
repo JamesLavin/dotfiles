@@ -46,9 +46,12 @@ set expandtab
 set shiftwidth=2                                    " tab == 2 spaces
 set softtabstop=2
 set sw=2
-nnoremap <C-c> "+y<CR>
-nnoremap gn :bn<CR>                                      " goto next buffer
-nnoremap gp :bp<CR>                                      " goto previous buffer
+
+" goto next buffer
+nnoremap gn :bn<CR>
+" goto previous buffer
+nnoremap gp :bp<CR>
+
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
 if executable('ag')
@@ -82,9 +85,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " tell ctags where to find tags
 set tags=./tags;
 
-" open in vertical split, not horizontal
-nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
 autocmd BufWritePre *.rb :%s/\s\+$//e
 autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffers
 
@@ -114,22 +114,41 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 
-nnoremap <C-n> :NERDTreeToggle<CR>                   " toggle NERDTree
-nnoremap <C-h> <C-W>h                                " move to window on left
-nnoremap <C-j> <C-W>j                                " move to window below
-nnoremap <C-k> <C-W>k                                " move to window above
-nnoremap <C-l> <C-W>l                                " move to window on right
-nnoremap <C-x> <C-W>T                                " move current window to new tab
-nnoremap <C-=> <C-W>=                                " equalize window size
+" open in vertical split, not horizontal
+nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" ???
+nnoremap <C-c> "+y<CR>
+" toggle NERDTree
+nnoremap <C-n> :NERDTreeToggle<CR>
+" move to window on left
+nnoremap <C-h> <C-W>h
+" move to window below
+nnoremap <C-j> <C-W>j
+" move to window above
+nnoremap <C-k> <C-W>k
+" move to window on right
+nnoremap <C-l> <C-W>l
+" move current window to new tab
+nnoremap <C-x> <C-W>T
+" equalize window size
+nnoremap <C-=> <C-W>=
 
-nnoremap <Leader><Leader> <C-^>                      " jump back-and-forth between files
-nnoremap <Leader>] :tabnext<CR>                      " jump to next tab
-nnoremap <Leader>[ :tabprev<CR>                      " jump to prev tab
-nnoremap <Leader>a :call RunAllSpecs()<CR>           " run all specs
-nnoremap <Leader>ag :vsp<CR>:Ag                      " ag search, then open in vertial split
-nnoremap <Leader>f :vertical botright wincmd gf<CR>  " go to file in vertical split
-nnoremap <Leader>l :call RunLastSpec()<CR>           " re-run last spec
-nnoremap <Leader>m <C-W>T                            " move current window to new tab
+" jump back-and-forth between files
+nnoremap <Leader><Leader> <C-^>
+" jump to next tab
+nnoremap <Leader>] :tabnext<CR>
+" jump to prev tab
+nnoremap <Leader>[ :tabprev<CR>
+" run all specs
+nnoremap <Leader>a :call RunAllSpecs()<CR>
+" create vertical split and start ag search
+nnoremap <Leader>ag :vsp<CR>:Ag 
+" go to file in vertical split
+nnoremap <Leader>f :vertical botright wincmd gf<CR>
+" re-run last spec
+nnoremap <Leader>l :call RunLastSpec()<CR>
+" move current window to new tab
+nnoremap <Leader>m <C-W>T
 nnoremap <Leader>nc :RTcontroller<CR>
 nnoremap <Leader>nf :RTfunctionaltest<CR>
 nnoremap <Leader>nh :RThelper<CR>
@@ -140,9 +159,11 @@ nnoremap <Leader>nm :RTmodel<CR>
 nnoremap <Leader>ns :RTspec<CR>
 nnoremap <Leader>nv :RTview<CR>
 nnoremap <Leader>nu :RTunittest<CR>
-nnoremap <leader>rc :vsplit $MYVIMRC<CR>             " open .vimrc in vertical split
+" open .vimrc in vertical split
+nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>    " run current spec
+" run current spec
+nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 " use <Leader>T to jump to tag in a vertical split
 " nnoremap <Leader>T :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<cr>:exec("tag ". word)<cr>
 " use <Leader>T to jump to tag in a new tab
@@ -157,11 +178,15 @@ nnoremap <Leader>vm :RVmodel<CR>
 nnoremap <Leader>vs :RVspec<CR>
 nnoremap <Leader>vv :RVview<CR>
 nnoremap <Leader>vu :RVunittest<CR>
+" switch window
 nnoremap <Leader>w <C-w>w
-nnoremap <Leader>x :tabe<CR>                         " open eXtra tab
+" open eXtra tab
+nnoremap <Leader>x :tabe<CR>
 
-"nmap <CR> o<Esc>                                 " add line below without switching to insert mode
-"nmap <S-Enter> O<Esc>                            " add line above without switching to insert mode
+" add line below without switching to insert mode
+nmap <CR> :pu_<Enter>
+" add line above without switching to insert mode
+nmap <Leader><CR> :pu!_<Enter>
 
 let g:rspec_runner = "os_x_iter"
 
