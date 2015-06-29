@@ -91,6 +91,18 @@ autocmd BufReadPost fugitive://* set bufhidden=delete " clean up Fugitive buffer
 " Display current Git branch
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
+function! AirlineInit()
+  let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'iminsert'])
+  let g:airline_section_b = airline#section#create(['hunks', 'branch'])
+  let g:airline_section_c = airline#section#create(['%<', 'file'])
+  let g:airline_section_gutter = airline#section#create(['%='])
+  let g:airline_section_x = airline#section#create_right([])
+  let g:airline_section_y = airline#section#create_right([])
+  let g:airline_section_z = airline#section#create(['windowswap', '%3p%%'.spc, 'linenr', ':%3v '])
+  let g:airline_section_warning = airline#section#create(['syntastic'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+
 "map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>s :split <C-R>=expand("%:p:h") . '/'<CR>
 "map <Leader>v :vnew <C-R>=expand("%:p:h") . '/'<CR>
@@ -105,6 +117,13 @@ colorscheme solarized
 " colorscheme molokai
 " colorscheme badwolf
 " colorscheme jellybeans
+
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#H',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W'}
 
 highlight LineNr ctermfg=grey
 
@@ -135,6 +154,8 @@ nnoremap <C-=> <C-W>=
 
 " jump back-and-forth between files
 nnoremap <Leader><Leader> <C-^>
+" browse tags using Ctrl-P
+nnoremap <leader>. :CtrlPTag<CR>
 " jump to next tab
 nnoremap <Leader>] :tabnext<CR>
 " jump to prev tab
@@ -168,6 +189,8 @@ nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 " nnoremap <Leader>T :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<cr>:exec("tag ". word)<cr>
 " use <Leader>T to jump to tag in a new tab
 nnoremap <silent><Leader>T <C-w><C-]><C-w>T
+" add line above without switching to insert mode
+nnoremap <Leader>u :pu!_<Enter>
 nnoremap <Leader>vc :RVcontroller<CR>
 nnoremap <Leader>vf :RVfunctionaltest<CR>
 nnoremap <Leader>vh :RVhelper<CR>
@@ -178,15 +201,14 @@ nnoremap <Leader>vm :RVmodel<CR>
 nnoremap <Leader>vs :RVspec<CR>
 nnoremap <Leader>vv :RVview<CR>
 nnoremap <Leader>vu :RVunittest<CR>
+nnoremap <Leader>we :call TabCall("EqualSizeWindows")<CR>
 " switch window
 nnoremap <Leader>w <C-w>w
 " open eXtra tab
 nnoremap <Leader>x :tabe<CR>
 
 " add line below without switching to insert mode
-nmap <CR> :pu_<Enter>
-" add line above without switching to insert mode
-nmap <Leader><CR> :pu!_<Enter>
+nnoremap <Leader><CR> :pu_<Enter>
 
 let g:rspec_runner = "os_x_iter"
 
@@ -199,7 +221,8 @@ endif
 :inoremap <C-d> <esc>ddi
 
 set tags=./tags;
-" let g:easytags_dynamic_files = 1
+"set tags=tags;/
+let g:easytags_dynamic_files = 1
 
 " Automatically set screen title to filename (http://vim.wikia.com/wiki/Automatically_set_screen_title)
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
@@ -217,6 +240,8 @@ function! TabCall(tab_func)
   exec ":normal! " . wn . "\<c-w>w"
 endfunction
 
-nnoremap <Leader>we :call TabCall("EqualSizeWindows")<CR>
+" mode aware cursors
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 set noswapfile
