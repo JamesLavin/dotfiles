@@ -1,4 +1,4 @@
-VIM NOTES - James Lavin - 8 Nov 2013
+VIM NOTES - James Lavin - 3 July 2015
   (Hugely influence by Drew Neil's vimcasts.org)
 
 <leader>                 \ (by default)
