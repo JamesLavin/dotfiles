@@ -1,0 +1,402 @@
+VIM NOTES - James Lavin - 8 Nov 2013
+  (Hugely influence by Drew Neil's vimcasts.org)
+
+<leader>                 \ (by default)
+vimtutor (from cmd line) launch vimtutor
+
+NORMAL MODE
+.                        repeat last command
+u                        undo
+>>                       indent current line
+5>>                      indent next 5 lines
+3<<                      outdent next 3 lines
+==                       auto-indent current line
+6==                      auto-indent next 6 lines
+>{motion}                auto-format based on motion
+=G                       auto-format from current to end of file
+vi}                      visual mode select inside {}
+=i}                      auto-indent inside {}
+gg                       goto top of file
+G                        goto bottom of file
+:13 (or 13G)             goto line 13
+i                        insert before cursor
+a                        append after cursor
+A (or $a)                switch to inset mode and jump to end of line
+W                        jump to next word
+c{motion}                d{motion}i
+  c3l                      d3li
+C (or d$a)               delete to end of line, then insert mode
+d0                       delete to beginning of line
+d$                       delete to end of line
+s (or xi)                delete character, then insert mode
+S (or ^C)                delete line, then insert mode
+I (or ^i)                insert at beginning of line
+o (or $a<CR>)            add line below, then insert mode
+V                        visual line mode and select line
+Vip                      visual line mode and select paragraph
+vit                      visual character mode and select HTML tag
+v$h                      visual character mode, go to end of line, then move back one character
+f[char]                  move forward to first character 'char'
+*                        search forwards for next word under cursor
+#                        search backwards to previous word under cursor
+/regex                   search forwards for /regex/
+  n                        jump to next match
+?regex                   search backwards for /regex/
+  n                        jump to next match
+<Ctrl>r                  last search pattern
+%                        jump to matching {, }, (, ), <, >, etc.
+gv                       reselect last visual selection
+p                        paste after current character/line (depending on default register contents)
+P                        paste before current character/line (depending on default register contents)
+xp                       exchange characters
+                           x deletes & puts char into default register
+                           p pastes default register contents after current character
+ddp                      exchange lines
+                           dd deletes line & puts into default register
+                           p pastes default register contents after current line
+yyp                      duplicate line
+                           yy copies line into default register
+yiw                      copy current word into default register
+viw                      select current word
+viwp                     select current word, paste from default register, and store deleted in default register
+v^h                      select leading whitespace characters
+ciw                      copy current word into default register, delete it from document & switch to insert mode
+v3e                      select from current cursor till end of 3rd word and switch to insert mode
+VG                       visual select all lines
+diw                      delete current word & paste into default register
+:                        switch to command mode
+
+COMMANDLINE MODE
+:source $MYVIMRC         reload .vimrc
+:e $MYVIMRC              edit .vimrc: 
+:h :vimgrep
+:vimgrep /\v`[^`]*`/g %  search for matches in current file and place them in quickfix list
+  :cnext                   jump to next match
+  :cprev                   jump to previous match
+:vim /word/g *.rb        search *.rb files for /word/
+:vim /word/g `find ...`  search specified files for /word/
+:vim /word/g ##          search arglist for /word/
+:vim /<Ctrl>r//g ##      search arglist for most recent search pattern
+:%s/\a/*/g               substitute on all lines
+:r [filename]            read file and insert contents in current cursor position
+:9yank                   yank line 9 without moving cursor
+:9t16 (:9copy16)         yank line 9 and copy to line 16
+:9t. (:9copy.)           yank line 9 and copy to current line
+:t7                      yank current line, paste below line 7, move cursor
+:-3t.                    yank line 3 above, paste below current line, move cursor
+:+4t.                    yank line 4 below, paste below current line, move cursor
+:5,11t.                  yank lines 5-11, paste below current line, move cursor
+%                        current file's path
+<Ctrl>p                  go backwards through history
+<Ctrl>n                  go forwards through history
+<Ctrl>f                  switch to commandline window
+                           it's a regular Vim buffer, so regular commands work
+
+INSERT MODE
+ctrl-v u00ac             insert character ¬
+ctrl-v u25b8             insert character ▸
+ctrl-v ctrl-i            insert tab
+<Ctrl-R>"                paste contents of default register
+<Ctrl-R>a                paste contents of register a
+<Ctrl-R>0                paste contents of yank register
+<Ctrl-R><Ctrl-O>"        paste contents of default register literally
+<Ctrl-R>=                switch to expression register (which evaluates VimScript)
+
+REGISTERS
+"ayy                     yank line into register a
+"Ayy                     yank line and append to register a
+:yank a                  yank line into register a
+:yank A                  yank line and append to register a
+"ade                     delete and store in register a
+""p                      paste contents of default register after current character/line
+"0p                      paste contents of the yank register after current character/line
+"ap                      paste contents of register a after current character/line
+"/p                      paste contents of last search register after current character/line
+"0P                      paste contents of the yank register before current character/line
+"aP                      paste contents of register a before current character/line
+"_diw                    delete word without touching the default register
+"ayiw                    yank current word into register a
+"aP                      paste contents of register a before current character/line
+qaq                      clear contents of register a
+:reg "                   display contents of default register
+:reg 0                   display contents of yank register (i.e., the last content yanked)
+:reg "0                  display contents of default & yank registers
+:reg :                   display contents of : register holding most recent ex command
+:reg "_                  display contents of the black hole register (like /dev/null)
+:global/TODO/yank A      yank all lines with /TODO/ into register a
+                           by finding all lines with /TODO/ and running 'yank A' on each
+
+ARG LIST/BUFFER LIST
+http://vimcasts.org/episodes/populating-the-arglist/
+:h :args_f
+:h {arglist}
+:h wildcards
+:args                    show the contents of the arglist
+:args {arglist}          set the content of the arglist
+  :args `find ...`
+  :args file1 file2
+  :args *.rb
+:argdo {cmd}             execute cmd on all files in arglist
+                           Works best with 'hidden' setting enabled
+:argdo %s/\a/*/ge        substitute on all files in {arglist} (e suppresses errors)
+:silent argdo %s/\a/*/ge substitute on all files and suppress output
+:silent! argdo {cmd}     suppress all output, including error messages
+:argdo <Ctrl>r:          pastes the ": register (holding content of last ex command)
+:bufdo {cmd}             execute cmd on all files in buffer list
+
+HELP/DOCUMENTATION
+:h quickref
+:h vimmodes
+:h _____                 Help
+:h .
+:h ctrl-r
+:h :yank
+:h i_ctrl-r              (i stands for "insert mode")
+:h i_ctrl-r_ctrl-o
+:h quote=
+:h registers
+:h changelist
+:h :normal
+ctrl-]                   (in Vim documentation) follow link under cursor
+
+FILES & DIRS
+:w                       save file changes
+:e                       revert to latest saved version of current file
+:e [filename]            edit file (use <tab> for tab completion)
+:e [dirname]             view dir's files in file explorer
+:e $VIMRUNTIME/indent    view indentation files directory
+                           Override with files in ~/.vim/indent
+:e!                      restore original file
+:q!                      force-quit Vim, tossing all modified buffers
+
+BUFFERS
+:ls                      show buffer list
+:bn                      open next buffer in current window (cycles from end of list to beginning)
+:bp                      open previous buffer in current window (cycles from start of list to end)
+CTRL-^                   switch to the alternate file
+:bd!                     forcibly remove buffer from buffer list, discarding changes
+
+WINDOWS
+ctrl-w s                 split current window horizontally, loading the same file in new window
+ctrl-w v                 split current window vertically, loading the same file in new window
+:sp[lit] filename        split current window horizontally, loading filename in new window
+:vsp[lit] filename       split current window vertically, loading filename in new window
+ctrl-w w                 cycle among open windows
+ctrl-w h                 focus on window to the left
+ctrl-w j                 focus on window below
+ctrl-w k                 focus on window above
+ctrl-w l                 focus on window to the right
+ctrl-w +                 increase height of current window by 1 line
+ctrl-w -                 decrease height of currentlyent window by 1 line
+ctrl-w _                 maximize height of current window
+ctrl-w |                 maximize width of current window
+ctrl-w r                 rotate all windows
+ctrl-w x                 exchange current window with its neighbor
+ctrl-w H                 move current window to far left
+ctrl-w J                 move current window to bottom
+ctrl-w K                 move current window to top
+ctrl-w L                 move current window to far right
+:q                       close currently active window
+:on[ly]                  close all windows except currently active window
+
+TABS
+:tabe[dit] filename      open filename in a new tab
+:pwd                     print working directory contents
+:cd                      change current tab's working directory
+:cd %:h                  change current working directory to that of file being edited
+ctrl-W T                 move current split window into its own tab
+:q                       close window, closing tab if it contains a single window
+:tabc[lose]              close current tab page and all its windows
+:tabo[nly]               close all tabs apart from current one
+gt                       move to next tab
+gT                       move to previous tab
+#gt                      move to tab number #
+:tabmove                 move current tab to the end
+:tabmove 0               move current tab to the beginning
+:tabmove 1               move current tab to become the 2nd tab
+:Btabedit [gem-name]     bundle open gem in new tab
+
+VISUAL MODE
+>                        indent selected lines
+<                        outdent selected lines
+=                        auto-indent selected lines
+<Ctrl>v                  switch to visual mode
+:s/x/y/g                 search (for 'x') and replace (with 'y') across selected lines
+:s/\%Vx/y/g              search (for 'x') and replace (with 'y') across selected block
+$                        select to the end (of all lines, not just current line)
+r                        replace every selected character with the next character you type
+c                        change selection (delete and switch to insert mode)
+c[changes]<ESC>          change all selections
+I                        insert before cursor
+A                        append after cursor
+r                        replace every character in selection
+d                        delete selection
+.                        repeat last visual mode command
+p                        paste last column yanked or deleted
+o                        toggle cursor to opposite corner of selected region
+
+MARKS
+:h m
+ma                       mark location as a
+'a                       jump to marked location a
+
+CHANGELIST
+:help changelist
+:help :changes
+:changes                 display changelist
+g;                       move backwards through changelist
+g,                       move forwards through changelist
+
+JUMPLIST
+:help jumplist
+:help jump-motions
+:help :jumps
+:jumps                   display jumplist
+<Ctrl>O                  move backwards through jumplist
+<Ctrl>I                  move forwards through jumplist
+
+MACROS
+:h q
+qa[keystrokes]q          record macro in register a
+@a                       replay macro in register a
+@@                       replay last played macro
+5@a                      replay macro in register a 5 times
+search with /, then @a, then n, then @@, then n, etc.
+
+FILE EXPLORER (netrw)
+Just another Vim buffer, so normal editing commands work
+:h netrw
+:h :edit
+:h :Explore
+:e. (:edit .)            open file explorer at current working directory
+:sp. (:split .)          open file explorer in split window at current working directory
+:vs. (:vsplit .)         open file explorer in vertical split window at current working directory
+:E (:Explore)            open file explorer at directory of last file opened in window
+:Se (:Sexplore)          open file explorer in split at directory of current file
+:Ve (:Vexplore)          open file explorer in verticalcal split at directory of current file
+<CR>                     goto file/directory under cursor
+% ________               create a new file in current directory
+d                        create a new directory under current directory
+R                        rename file/directory under cursor
+D                        delete file/directory under cursor
+<Shift-r>                to rename/move file
+
+VIMDIFF MODE (FUGITIVE.VIM)
+http://vimcasts.org/episodes/fugitive-vim---a-complement-to-command-line-git/
+http://vimcasts.org/episodes/fugitive-vim-working-with-the-git-index/
+http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/
+http://vimcasts.org/episodes/fugitive-vim-browsing-the-git-object-database/
+http://vimcasts.org/episodes/fugitive-vim-exploring-the-history-of-a-git-repository/
+:h :Git
+:h :Gwrite, :Gread, :Gblame, :Glog, :Ggrep, etc.
+:h :diffget / :h do
+:h :diffput / :h dp
+:Gwrite (:Git add %)     stage current file to the index
+:Gread (:Git checkout %) revert current file to last checked-in version
+:Gremove (:Git rm %)     delete the current file and the corresponding Vim buffer
+:Gmove (:Git mv %)       rename the current file and the corresponding Vim buffers
+:Gedit :path/to/file     open index version of current file
+:Gedit :0                  (same)
+:Gedit branch:%.         open branch's version of current file
+:Gedit SHA               open interactive textual representation of git object (blog, tree, commit, tag)
+  <ENTER>                  open commit object/tree or diff of file before/after commit
+  C                        (on tree or blob) jump to commit object
+  a                        (on tree object) toggle between 'git show' and 'git ls-tree' views
+  :e %:h                   open parent tree
+:Gcommit                 open commit window (with auto-completion) in split window
+:Gblame                  open vertical split with Git blame contents
+:Gbrowse                 open Github page for current Git object
+:Gstatus                 'git status' in interactive window
+  <Ctrl>n                  move down to next file
+  <Ctrl>p                  move up to previous file
+  -                        'git add' unstaged file to index
+  -                        'git reset' staged file to remove from index
+  [select files]-          'git add/reset' visually selected files
+  p                        'git add --patch' selected file
+  <Enter>                  open selected file in separate window
+  C                        commit changes
+:Git add .               stage all unstaged files
+:Gdiff                   compares index copy & working copy
+  |   index copy    |   working copy    |
+  :Gwrite (working copy)   stage changes
+  :Gread (index copy)      stage changes
+  :Gwrite (index copy)     revert changes
+  :Gread (working copy)    revert changes
+  do (:diffget)          diff obtain == get buffer contents from other buffer
+  dp (:diffput)          push buffer contents to other buffer
+:diffupdate              refresh diff highlighting
+:Gdiff (on conflicted file)
+  |  target (HEAD) branch   |   working copy   |    merge branch   |
+  |      bufspec: //2       |                  |    bufspec: //3   |
+  |           2             |        1         |          3        |
+  |       :diffput 1        |   :diffget 2     |                   |
+  |                         |   :diffget 3     |    :diffput 1     |
+  dp                     push buffer contents to working copy
+  :Gwrite!               overwrite working tree and index with active file
+[close windows]          exit vimdiff mode
+:Glog                    load all previous revisions of current file into quickfix list
+:Glog -10                load last 10 previous revisions of current file into quickfix list
+:Glog -10 --reverse      load first 10 revisions of thee current file into the quickfix list (in reverse chronological order)
+:Glog -1 --until=yesterday load last version of current file that was checked in before last midnight
+:Glog -1 --since=yesterday load last version of current file that was checked in since last midnight
+  :cnext                   go to next (oldest) version of file
+  :cprev                   go to previous (less old) version of file
+  :Gedit                   open latest version of file
+:!cd ____                change directory (for shell)
+:!pwd                    print working directory contents (for shell)
+:nnoremap Q [VimScript expression]  creates alias/shortcut 'Q'
+:'<,'>normal Q           apply Q to each selected line
+:Glog --                 put list of ancestral commits into quickfix list
+:Glog -- %               put list of ancestral commits that touch current file into quickfix list
+:Ggrep 'find me'         place 'git grep' search results in quickfix list
+:Ggrep --cached 'find me'place 'git grep' search results on index in quickfix list
+:Ggrep 'find me' branch  place 'git grep' search results on specified branch into quickfix list
+:Ggrep 'find me' SHA/tag place 'git grep' search results on specified SHA/tag into quickfix list
+:Glog --grep=page        place 'git log' search results matching 'page' into quickfix list
+:Glog --grep=page --     place 'git log' search results in ancestral commits into quickfix list
+:Glog --grep=page -- %   place 'git log' search results in ancestral commits that touch current file into quickfix list
+:Glog -Spage             place all commits that add or remove 'page' into quickfix list (git log -Spaginate)
+:Glog -Spage --          place all ancestral commits that add or remove 'page' into quickfix list (git log -Spaginate)
+:Glog -Spage -- %        place all ancestral commits that touch current file & add/remove 'page' into quickfix list (git log -Spaginate)
+
+QUICKFIX LIST
+:h quickfix
+:copen                   open quickfix list window
+populate quickfix list and do search-and-replace over it:
+  :args *.txt
+  :vimgrep /Vimcasts\.\zscom/g ##
+  :cdo %s/Vimcasts\.\zscom/org/ge
+  :cdo update
+
+UNIMPAIRED.VIM
+[q                       :cprev
+]q                       :cnext
+[Q                       :cfirst
+]Q                       :clast
+
+STARTING VIM
+vim -o [list of files]   open files in horizontal split
+
+SETTINGS
+:set (no)list            (no) display hidden characters (short for 'listchars')
+:set list!               toggle between list/nolist (short for 'listchars')
+:set (no)number          turn on (off) line numbers
+:se nonu!                toggle between number/nonumber
+:set hidden
+
+.VIMRC
+let mapleader=','
+map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
+nmap <leader>l :set list!<CR>  (in .vimrc) sets <leader>l to toggle list
+command! -nargs=* Wrap set wrap linebreak nolist
+
+bundle show --paths
+ag 'def semantic_errors' $(bundle show --paths)
+
+TMUX
+tmux ls                  list tmux sessions
+<prefix>0/1/2/etc        jump to window n
+<prefix>s                list tmux sessions
+<prefix>c                create new window
+<prefix>l                jump to last window
+<prefix>n/p              jump to prev/next window
