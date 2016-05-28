@@ -20,7 +20,10 @@ if filereadable(expand("~/.vimrc.bundles"))
 endif
 
 if has("autocmd")
+  filetype on                                        " enable file type detection
   filetype plugin indent on
+  autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+  autocmd FileType ruby runtime ruby_mappings.vim
 endif
 
 runtime macros/matchit.vim
@@ -37,20 +40,14 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
 
-" remap vgf to open vertical split
-" nnoremap <silent> vgf :vertical botright wincmd f<CR>
-
+set splitright                                      " add vertical split on right
 set hlsearch                                        " highlight search matches
 set incsearch                                       " highlight search matches while typing
-set expandtab
 set shiftwidth=2                                    " tab == 2 spaces
 set softtabstop=2
+set tabstop=2
+set expandtab                                       " insert spaces, not tabs, because tabs suck
 set sw=2
-
-" goto next buffer
-nnoremap gn :bn<CR>
-" goto previous buffer
-nnoremap gp :bp<CR>
 
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
@@ -65,12 +62,27 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+set splitright
+set splitbelow
+set switchbuf+=usetab,newtab
+
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" I hate horizontal splits
+cabbrev split vsplit
+cabbrev hsplit split
+cabbrev sta vertical sta
+cabbrev help vertical help
+cabbrev new vnew
+cabbrev right botright
 
 set history=10000                                    " remember a lot
 set visualbell                                       " no sound
 set autoread                                         " reload files changed outside vim
 autocmd FocusGained,BufEnter,BufWinEnter,CursorHold,CursorMoved * :checktime
+
+" autocmd Bufread,BufNewFile *.feature set filetype=gherkin
+" autocmd! Syntax gherkin source ~/.vim/cucumber.vim
 
 " auto-launch NERDTree
 "autocmd VimEnter * if !argc() | NERDTree | endif
@@ -98,7 +110,8 @@ function! AirlineInit()
   let g:airline_section_gutter = airline#section#create(['%='])
   let g:airline_section_x = airline#section#create_right([])
   let g:airline_section_y = airline#section#create_right([])
-  let g:airline_section_z = airline#section#create(['windowswap', '%3p%%'.spc, 'linenr', ':%3v '])
+  "let g:airline_section_z = airline#section#create(['windowswap', '%3p%%'.spc, 'linenr', ':%3v '])
+  let g:airline_section_z = airline#section#create(['windowswap', '%3p%%', 'linenr', ':%3v '])
   let g:airline_section_warning = airline#section#create(['syntastic'])
 endfunction
 autocmd VimEnter * call AirlineInit()
@@ -133,6 +146,14 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 
+" go to next buffer
+nnoremap gn :bn<CR>
+" go to previous buffer
+nnoremap gp :bp<CR>
+
+" use ,f to jump to tag in a vertical split
+nnoremap <silent> ,f :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<cr>:exec("tag ". word)<cr>
+
 " open in vertical split, not horizontal
 nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " ???
@@ -149,9 +170,13 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 " move current window to new tab
 nnoremap <C-x> <C-W>T
-" equalize window size
-nnoremap <C-=> <C-W>=
+" auto-equalize window size
+autocmd VimResized * wincmd =
 
+" maximize window size
+nnoremap <Leader>- :wincmd _<CR>:wincmd \|<CR>
+" equalize window size
+nnoremap <Leader>= :wincmd =<CR>
 " jump back-and-forth between files
 nnoremap <Leader><Leader> <C-^>
 " browse tags using Ctrl-P
@@ -164,6 +189,11 @@ nnoremap <Leader>[ :tabprev<CR>
 nnoremap <Leader>a :call RunAllSpecs()<CR>
 " create vertical split and start ag search
 nnoremap <Leader>ag :vsp<CR>:Ag 
+nnoremap <Leader>e :call TabCall("EqualSizeWindows")<CR>
+" remap vgf to open file in vertical split
+" nnoremap <silent> vgf :vertical botright wincmd f<CR>
+" use ,gf to go to file in a vertical split
+" nnoremap <silent> ,gf :vertical botright wincmd f<CR>
 " go to file in vertical split
 nnoremap <Leader>f :vertical botright wincmd gf<CR>
 " re-run last spec
@@ -180,8 +210,9 @@ nnoremap <Leader>nm :RTmodel<CR>
 nnoremap <Leader>ns :RTspec<CR>
 nnoremap <Leader>nv :RTview<CR>
 nnoremap <Leader>nu :RTunittest<CR>
+nnoremap <Leader>o :TagbarToggle<CR>
 " open .vimrc in vertical split
-nnoremap <leader>rc :vsplit $MYVIMRC<CR>
+nnoremap <Leader>rc :vsplit $MYVIMRC<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 " run current spec
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
@@ -201,7 +232,6 @@ nnoremap <Leader>vm :RVmodel<CR>
 nnoremap <Leader>vs :RVspec<CR>
 nnoremap <Leader>vv :RVview<CR>
 nnoremap <Leader>vu :RVunittest<CR>
-nnoremap <Leader>we :call TabCall("EqualSizeWindows")<CR>
 " switch window
 nnoremap <Leader>w <C-w>w
 " open eXtra tab
@@ -212,17 +242,18 @@ nnoremap <Leader><CR> :pu_<Enter>
 
 let g:rspec_runner = "os_x_iter"
 
-if has("gui_macvim")
-  let g:rspec_command = "spring rspec {spec}"
-else
-  let g:rspec_command = "!spring rspec {spec}"
-endif
+"if has("gui_macvim")
+"  let g:rspec_command = "spring rspec {spec}"
+"else
+"  let g:rspec_command = "!spring rspec {spec}"
+"endif
 
 :inoremap <C-d> <esc>ddi
 
-set tags=./tags;
-"set tags=tags;/
-let g:easytags_dynamic_files = 1
+" can't get easytags working
+" set tags=./tags;
+" let g:easytags_dynamic_files = 1
+" let g:easytags_events = ['BufWritePost']
 
 " Automatically set screen title to filename (http://vim.wikia.com/wiki/Automatically_set_screen_title)
 autocmd BufEnter * let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"

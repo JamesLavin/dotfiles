@@ -121,9 +121,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Hedgeye only
 if [[ $platform == 'Mac' ]]; then
-  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-  PATH=$PATH:/usr/texbin
+    . ~/.mac_bash
 fi
 
