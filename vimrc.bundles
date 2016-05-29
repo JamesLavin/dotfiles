@@ -10,9 +10,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'elmcast/elm-vim'
 
-" https://github.com/gmarik/vundle#readme
-Plug 'gmarik/Vundle.vim'
-
 " https://github.com/bling/vim-airline
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
