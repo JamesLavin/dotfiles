@@ -72,7 +72,7 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 cabbrev split vsplit
 cabbrev hsplit split
 cabbrev sta vertical sta
-cabbrev help vertical help
+"cabbrev help vertical help
 cabbrev new vnew
 cabbrev right botright
 
@@ -122,7 +122,8 @@ autocmd VimEnter * call AirlineInit()
 
 set background=light
 let g:airline_powerline_fonts = 1
-let g:airline_theme='solarized'
+"let g:airline_theme='solarized'
+let g:airline_theme='light'
 let g:solarized_termcolors=256
 let g:solarized_visibility = "high"
 let g:solarized_contrast = "high"
@@ -275,4 +276,9 @@ endfunction
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+let g:session_autosave = 'no'
+
+let g:elm_format_autosave = 1
+
 set noswapfile
+
