@@ -18,15 +18,19 @@
   slb = log --pretty=format:'%C(yellow)%h%C(reset) - %an [%C(green)%ar%C(reset)]%C(reset)%C(red)%d%C(reset) %s' --decorate --graph --all
   who = shortlog -s --
 [core]
-  editor = /usr/local/bin/vim
+  editor = vim
 [diff]
-  tool = gvimdiff
+  tool = vimdiff
 	compactionHeuristic = 1
 [merge]
-  tool = gvimdiff
+  tool = vimdiff
 [mergetool]
   prompt = false
 [push]
   default = matching
 [interactive]
 	diffFilter = diff-highlight
+[init]
+  templatedir = ~/.git_template
+[github]
+  user = jameslavin
