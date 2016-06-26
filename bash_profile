@@ -1,6 +1,6 @@
 set -o vi
 
-[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+#[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 
 function detect_os {
   platform='unknown'
@@ -65,32 +65,30 @@ if [[ $platform == 'Mac' ]]; then
   #export PATH="$HOME/Applications/Anaconda/anaconda/envs/py34/bin:$PATH"
   # added by Anaconda3 2.2.0 installer
   export PATH="/Users/jlavin/anaconda/bin:$PATH"
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 elif [[ $platform == 'Linux' ]]; then
   echo "*** Hooray! You're using Linux! ***"
   export PATH="$HOME/anaconda3/bin:$PATH"
 else
   echo "*** Oops. We can't detect your operating system! ***"
+fi
 
 # Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Use pry as Rails console
 alias pryr='pry -r ./config/environment'
 
-# DOCKER
-eval $(docker-machine env default)
-alias d='docker '
-alias dm='docker-machine '
-
-
-if [ -f ~/.bashrc ]; then 
-  source ~/.bashrc 
+if [ -f /usr/local/bin/docker-machine ]; then
+  echo "Configuring docker-machine"
+  eval $(docker-machine env default)
+  alias d='docker '
+  alias dm='docker-machine '
 fi
 
-if [[ -a ~/.localrc ]]; then
+if [[ -f ~/.localrc ]]; then
   source ~/.localrc
 fi
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
