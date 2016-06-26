@@ -1,5 +1,7 @@
 set -o vi
 
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+
 function detect_os {
   platform='unknown'
   unamestr=`uname`
@@ -27,76 +29,68 @@ function run_machine_specific_bash {
 }
 run_machine_specific_bash
 
-export JRUBY_OPTS="--1.9 -J-XX:+TieredCompilation"
-export NODE_PATH=$HOME/Git/node/node_modules
 if [[ $platform == 'Linux' ]]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
-  eval "$(rbenv init -)"
-  export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/jre/bin
-  export SELENIUM_SERVER_JAR=$HOME/lib/selenium-server-standalone-2.24.1.jar
+  export EDITOR=/usr/bin/vim
   alias ls='ls --color=auto'
 elif [[ $platform == 'Mac' ]]; then
   alias ls='ls -G'
-  alias rungodless='cd ~/Git/hedgeye-cms; ruby tools/scott/working_scripts/rungodless.rb $1'
-  export JAVA_HOME=$(/usr/libexec/java_home)
-  export PATH="$PATH:$HOME/phantomjs-1.9.0-macosx/bin"
-  export PATH=$PATH:/usr/local/share/npm/bin
-  export CLASSPATH=.:$HOME/Tech/Java/
 fi
 
 alias grep='grep --color=auto'
 alias g='grep -iIr --color=auto --exclude={jasmine-jquery.js,*.log,*.sql,*min.js,ext-all.js,*mobile.js,*.svg} --exclude-dir={.git,log,vendor/plugins,vendor/assets/stylesheets} '
 alias pg91='/usr/lib/postgresql/9.1/bin/postgres -D /etc/postgresql/9.1/main'
-alias specs='spork & sleep 60s & cd ~/Git/stylitics; bundle exec rspec spec'
 alias dc='git diff --cached'
 alias ga='git add '
 alias grm='git rebase master'
 alias gcom='git co master'
-alias gpo='git push origin `git rev-parse --abbrev-ref HEAD`'
-alias gpu='git pull upstream `git rev-parse --abbrev-ref HEAD`'
-alias tssbs='git pull upstream `git rev-parse --abbrev-ref HEAD`; git push origin `git rev-parse --abbrev-ref HEAD`'
-alias gpum='git pull upstream master'
-alias gpom='git push origin master'
+#alias gpo='git push origin `git rev-parse --abbrev-ref HEAD`'
+#alias gpu='git pull upstream `git rev-parse --abbrev-ref HEAD`'
+#alias gpum='git pull upstream master'
+#alias gpom='git push origin master'
+alias gpush='git push origin `git rev-parse --abbrev-ref HEAD`'
+alias gpull='git pull origin `git rev-parse --abbrev-ref HEAD`'
+#alias tssbs='git pull upstream `git rev-parse --abbrev-ref HEAD`; git push origin `git rev-parse --abbrev-ref HEAD`'
+#alias gpum='git pull upstream master'
+#alias gpom='git push origin master'
 alias be='bundle exec'
 alias ber='bundle exec rspec '
+alias bi='bundle install'
+alias gl='git log'
+alias gs='git status'
 alias gitff='git grep -l --all-match -e '
 alias searchgit='git log -Sword'
 #alias gitfl='git log --all-match --grep='
  
-#alias stylitics-qa='heroku pg:psql -a stylitics-qa'
-#alias stylitics='heroku pg:psql -a stylitics'
-
-# Hedgeye only
 if [[ $platform == 'Mac' ]]; then
-  export rvm_silence_path_mismatch_check_flag=1
-  export PATH="/usr/local/bin:$PATH"
-
-  ### Added by the Heroku Toolbelt
-  export PATH="/usr/local/heroku/bin:$PATH"
-
-  tyson_get() {
-    scp ubuntu@tyson.hedgeye.com:/backup/db_backup/db_backup.23.sql.gz .
-  }
-
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-  # Path to the bash it configuration
-  export BASH_IT="$HOME/.bash_it"
-
-  # Lock and Load a custom theme file
-  export BASH_IT_THEME="bobby"
-
-  # Load Bash It
-  source $BASH_IT/bash_it.sh
-
-  alias superbox="ssh server@superbox.hedgeye.com"
-
-  export PATH="$HOME/Applications/Anaconda/anaconda/envs/py34/bin:$PATH"
+  #export PATH="$HOME/Applications/Anaconda/anaconda/envs/py34/bin:$PATH"
+  # added by Anaconda3 2.2.0 installer
+  export PATH="/Users/jlavin/anaconda/bin:$PATH"
 elif [[ $platform == 'Linux' ]]; then
   echo "*** Hooray! You're using Linux! ***"
-  #export PATH="$HOME/anaconda/bin:$PATH"
-  export PATH="$HOME/anaconda/envs/py34/bin:$PATH"
+  export PATH="$HOME/anaconda3/bin:$PATH"
 else
   echo "*** Oops. We can't detect your operating system! ***"
+
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Use pry as Rails console
+alias pryr='pry -r ./config/environment'
+
+# DOCKER
+eval $(docker-machine env default)
+alias d='docker '
+alias dm='docker-machine '
+
+
+if [ -f ~/.bashrc ]; then 
+  source ~/.bashrc 
+fi
+
+if [[ -a ~/.localrc ]]; then
+  source ~/.localrc
+fi
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
 fi
