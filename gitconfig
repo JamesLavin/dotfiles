@@ -1,0 +1,32 @@
+[user]
+  name = James Lavin
+  email = not_my@real.address
+[color]
+  ui = true
+  diff = auto
+  pager = true
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  dc = diff --cached
+  glog = log -E -i --grep
+  lg = log -p
+  sla = log --oneline --decorate --graph --all
+  slb = log --pretty=format:'%C(yellow)%h%C(reset) - %an [%C(green)%ar%C(reset)]%C(reset)%C(red)%d%C(reset) %s' --decorate --graph --all
+  who = shortlog -s --
+[core]
+  editor = /usr/local/bin/vim
+[diff]
+  tool = gvimdiff
+	compactionHeuristic = 1
+[merge]
+  tool = gvimdiff
+[mergetool]
+  prompt = false
+[push]
+  default = matching
+[interactive]
+	diffFilter = diff-highlight
